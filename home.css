@@ -1,0 +1,84 @@
+header {
+    color: white;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 8%;
+    margin: none;
+    padding: 0 20px;
+}
+
+body {
+    background: linear-gradient(#252525, #4e4e4c);
+    height: 400px;
+    width: 800px;
+    font-family: Helvetica, sans-serif;
+    font-size: 14;
+    align-content: center;
+}
+
+.grid {
+    display: grid;
+    height: 250px;
+    width: 500px;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    grid-gap: 75px 75px;
+    position: relative;
+    top: 10%;
+    left: 20%;
+    justify-content: center;
+}
+
+.box {
+    
+    color: black;
+    text-align: center;
+    text-justify: center;
+    border-radius: 3px;
+    justify-content: center;
+    padding: 10px 10px;
+}
+
+.measure {
+    color: white;
+    background: #190074;
+}
+
+.measure:hover {
+    border-radius: 3px;
+    color: #190074;
+    background: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #190074;
+}
+
+#off {
+    float: right;
+    background: url(./images/Shutdown_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home {
+    float: left;
+    background: url(./images/Home_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#off:hover {
+    background: url(./images/Shutdownhov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home:hover {
+    background: url(./images/Homehov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}

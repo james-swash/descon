@@ -1,0 +1,131 @@
+@font-face {
+    font-family: "Digital";
+    src: url(./fonts/Digital-7.ttf) format('truetype');
+  }
+
+
+header {
+    color: Black;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 8%;
+    margin: none;
+    padding: 0 20px;
+}
+
+body {
+    background: linear-gradient(#cac9c9, #ffffff);
+    font-family: "Digital", sans-serif;
+    font-size: 14;
+    height: 400px;
+    width: 800px;
+    align-content: center;
+}
+
+h1 {
+    font-size: 72px;
+    color: black;
+    text-align: right;
+    margin-top: 100px;
+}
+
+.attributes {
+    width: 800px;
+    height: 50px;
+    float: top;
+    border-bottom: solid gray 2px;
+    font-size: 30px;
+    padding: 5px 10px;
+}
+
+.toggleMenu {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url(./images/More_64px.png);
+    background-size: cover;
+}
+
+.menu {
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    color: black;
+    float: left;
+    width: 95px;
+    height: 250px;
+    text-align: left;
+    border-right: solid gray 2px;
+    z-index: 10;
+}
+
+.submenu {
+    margin-left: 95px;
+    width: 75px;
+    height: 100px;
+    border-right: solid gray 2px;
+    border-bottom: solid gray 2px;
+    text-align: left;
+}
+
+#dcac {
+    float: left;
+}
+
+#autorange {
+    float: right;
+}
+
+#mode {
+    margin-top: 50px;
+    padding: 15px 0;
+}
+#hold {
+    padding: 15px 0;
+}
+
+#screenshot {
+    padding: 15px 0;
+}
+
+#settings {
+    padding: 15px 0;
+}
+
+#off {
+    float: right;
+    background: url(./images/Shutdown_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home {
+    float: left;
+    background: url(./images/Home_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#off:hover {
+    background: url(./images/Shutdownhov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home:hover {
+    background: url(./images/Homehov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+.toggleMenu:hover {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url(./images/Menuhov_64px.png);
+    background-size: cover;
+}
