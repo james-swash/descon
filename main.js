@@ -7,9 +7,16 @@ const path = require('path')
 const url = require('url')
 require('electron-reload')(__dirname);
 let win
+var IMG_DIR = '/images/';
 
 function createWindow() {
-    win = new BrowserWindow({width:850, height:417, frame: true, webPreferences: {webSecurity: false}})
+    win = new BrowserWindow({
+        width:800, 
+        height:400, 
+        frame: false, 
+        icon: path.join(__dirname, IMG_DIR, 'icon.png'),
+        webPreferences: {webSecurity: false}
+    })
     win.loadURL(url.format({
         pathname:path.join(__dirname, 'home.html'),
         node: {
@@ -23,7 +30,8 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
-
+    win.setFullScreen(true);
+    
     //win.openDevTools()
 }
 
@@ -42,4 +50,5 @@ app.on('activate', () => {
     }
 })
 
+exports.win = win;
 
