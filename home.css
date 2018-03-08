@@ -9,12 +9,16 @@ header {
 }
 
 body {
-    background: linear-gradient(#252525, #4e4e4c);
+    background: linear-gradient(#2b2b2b, #1a1919);
     height: 383px;
     width: 750px;
     font-family: Helvetica, sans-serif;
     font-size: 14;
     align-content: center;
+}
+
+a {
+    text-decoration: none;
 }
 
 .grid {
@@ -41,16 +45,15 @@ body {
 
 .measure {
     color: white;
-    background: #190074;
 }
 
 .measure:hover {
     border-radius: 3px;
-    color: #190074;
-    background: white;
+    color: black;
+    background: rgb(175, 175, 175);
     border-style: solid;
     border-width: 2px;
-    border-color: #190074;
+    border-color: rgb(7, 0, 102);
 }
 
 #off {

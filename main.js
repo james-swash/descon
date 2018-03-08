@@ -30,7 +30,7 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
-    win.setFullScreen(true);
+    // win.setFullScreen(true);
     
     //win.openDevTools()
 }

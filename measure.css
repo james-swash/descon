@@ -23,6 +23,12 @@ body {
     align-content: center;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 h1 {
     font-size: 72px;
     color: black;
@@ -30,8 +36,12 @@ h1 {
     margin-top: 100px;
 }
 
+ul { 
+    list-style-type: none; 
+}
+
 .attributes {
-    width: 800px;
+    width: 750px;
     height: 50px;
     float: top;
     border-bottom: solid gray 2px;
@@ -50,22 +60,39 @@ h1 {
 .menu {
     font-family: Helvetica, sans-serif;
     font-size: 18px;
+    position: relative;
     color: black;
+    margin-left: -50px;
     float: left;
-    width: 95px;
+    width: 100px;
     height: 250px;
     text-align: left;
     border-right: solid gray 2px;
     z-index: 10;
 }
 
-.submenu {
-    margin-left: 95px;
-    width: 75px;
+.modemenu {
+    margin-top: -70px;
+    margin-left: 100px;
+    position: absolute;
+    width: 100px;
     height: 100px;
     border-right: solid gray 2px;
     border-bottom: solid gray 2px;
     text-align: left;
+    padding: -40px;
+}
+
+.rangemenu {
+    margin-top: -125px;
+    margin-left: 100px;
+    position: absolute;
+    width: 100px;
+    height: 230px;
+    border-right: solid gray 2px;
+    border-bottom: solid gray 2px;
+    text-align: left;
+    padding: -40px;
 }
 
 #dcac {
@@ -77,7 +104,10 @@ h1 {
 }
 
 #mode {
-    margin-top: 50px;
+    margin-top: 20px;
+    padding: 15px 0;
+}
+#range {
     padding: 15px 0;
 }
 #hold {
@@ -90,6 +120,23 @@ h1 {
 
 #settings {
     padding: 15px 0;
+}
+
+#voltage {
+    padding-left: -20px;
+}
+
+#current {
+    padding-bottom: 15px;
+    padding-left: -20px;
+}
+
+#resistance {
+    padding: 15px 0;
+}
+
+#mega, #kilo, #none, #milli, #micro, #nano, #pico {
+    padding: 5px 0;
 }
 
 #off {
@@ -108,6 +155,17 @@ h1 {
     height: 30px;
 }
 
+#rangevalue {
+    font-size: 70% !important;
+}
+
+#unitvalue {
+    font-size: 100%;
+}
+
+#value {
+    font-size: 100%;
+}
 #off:hover {
     background: url(./images/Shutdownhov_50px.png);
     background-size: cover;

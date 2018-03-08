@@ -3,8 +3,14 @@ $(document).ready(function() {
 	const {remote} = require('electron')
 	var win = remote.getCurrentWindow();
 	// Listen for the Off checkbox being clicked
-	$("#off").on('click', () => {
-		win.close();
-		console.log('window is closed')
-		})
+	function turnoff() {
+		$("#off").on('click', () => {
+			if(confirm("Are you sure you want to exit the application?")){
+				win.close();
+				}
+			})
+	}
+	
+	turnoff()
+	
 	})
