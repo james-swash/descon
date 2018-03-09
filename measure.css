@@ -167,6 +167,7 @@ ul {
 #value {
     font-size: 100%;
 }
+
 #off:hover {
     background: url(./images/Shutdownhov_50px.png);
     background-size: cover;
