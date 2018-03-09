@@ -12,7 +12,7 @@ var IMG_DIR = '/images/';
 function createWindow() {
     win = new BrowserWindow({
         width:800, 
-        height:400, 
+        height:450, 
         frame: false, 
         icon: path.join(__dirname, IMG_DIR, 'icon.png'),
         webPreferences: {webSecurity: false}
@@ -30,7 +30,7 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
-    // win.setFullScreen(true);
+    win.setFullScreen(true);
     
     //win.openDevTools()
 }
