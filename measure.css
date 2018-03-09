@@ -21,6 +21,7 @@ body {
     height: 460px;
     width: 750px;
     align-content: center;
+    /* cursor: none; */
 }
 
 a {
