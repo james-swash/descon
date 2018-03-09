@@ -27,11 +27,11 @@ table {
 }
   
 thead th {
-    background: #88CCF1;
-    color: #FFF;
+    background: rgb(68, 170, 224);
+    color: rgb(255, 255, 255);
     font-family: 'Lato', sans-serif;
     font-size: 16px;
-    font-weight: 100;
+    font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
