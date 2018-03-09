@@ -14,7 +14,7 @@ $(document).ready(function() {
         $(".menu").hide()
 
         $(".toggleMenu").on('click', () => {
-            $(".menu").slideToggle()
+            $(".menu").toggle()
             $(".modemenu").hide()
             $(".rangemenu").hide()
             $("#mode").on('click', function() {
