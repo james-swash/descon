@@ -2,6 +2,7 @@ $(document).ready(function() {
     const electron = require('electron')
     const {remote} = require('electron')
     var win = remote.getCurrentWindow()   
+    const html2canvas = require('html2canvas')
     
     var unit = 'V'
     var range = 'm'
@@ -24,9 +25,6 @@ $(document).ready(function() {
             $("#range").on('click', function() {
                 $('.modemenu').hide()
                 $('.rangemenu').toggle()
-            })
-            $("#screenshot").on('click', () => {
-                alert("Are you sure you want to take a screenshot?")
             })
         })
 
@@ -100,6 +98,16 @@ $(document).ready(function() {
 
     }
 
+    function screenShot() {
+        $('#screenshot').on('click', function(e) {
+            if(confirm("Are you sure you wish to take a screenshot?")){
+                html2canvas(document.body).then(function(canvas) {
+                    document.body.appendChild(canvas);
+                });
+            }
+        })
+    }
+
     function turnOff() {
         $("#off").on('click', () => {
             if(confirm("Are you sure you want to exit the application?")){
@@ -151,6 +159,7 @@ $(document).ready(function() {
     menu()
     getMode()
     getRange()
+    screenShot()
     setInterval(function(){msg2Board(unit)}, 1000)
 
 })
