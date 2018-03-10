@@ -17,9 +17,9 @@ body {
   }
 
 table {
-    width: 80%;
-    height: 60%;
-    left: 10%;
+    width: 90%;
+    height: 80%;
+    left: 40px;
     margin: 20px auto;
 }
 
@@ -28,7 +28,7 @@ th, td {
     font-size: 14px;
     font-weight: 400;
     padding: 15px;
-    text-align: center;
+    text-align: right;
     vertical-align: middle;
     width: 25%;
 }
@@ -62,14 +62,26 @@ thead th {
 }
 
 tbody {
-    height: 250px;
+    height: 280px;
     overflow-y: auto;
 }
 
-
+thead th {
+    width: 20.5% !important;
+}
 tbody td, thead th {
     width: 19.2%;
     float: left;
+}
+
+#export {
+    margin: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #000; 
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 8px;
 }
 
 #off {

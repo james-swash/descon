@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     let valueData = JSON.parse(localStorage.getItem('storedData'))
     let timeData = JSON.parse(localStorage.getItem('timeData'))
-    var unitData = localStorage.getItem('unitData')
+    let unitData = JSON.parse(localStorage.getItem('unitData'))
 
     var tableValues = new Array()
     var tableColumns = new Array("Record Number", "Time of Record", "Unit", "Value")
@@ -21,22 +21,31 @@ $(document).ready(function() {
 
     function populateData() {
         var length = []
+        var unitInstance
 
-        switch(unitData) {
-            case 'V':
-                unitData = "Voltage"
-                break
-            case 'I':
-                unitData = "Current"
-                break
-            case 'R':
-                unitData = "Resistance"
-                break
-        }
 
         for (var i = 0; i < valueData.length; i++){
             length.push(i+1)
-            tableValues[i] = [length[i], timeData[i], unitData, valueData[i]]
+            if (unitData[i].charAt(0) === 'V'){
+                if (unitData[i].charAt(2) === 'A') {
+                    unitInstance = "Voltage - AC"
+                }
+                else if (unitData[i].charAt(2) === 'D') {
+                    unitInstance = "Voltage - DC"
+                }
+            }
+            else if (unitData[i].charAt(0) === 'A'){
+                if (unitData[i].charAt(2) === 'A') {
+                    unitInstance = "Current - AC"
+                }
+                else if (unitData[i].charAt(2) === 'D') {
+                    unitInstance = "Current - DC"
+                }
+            }
+            else if (unitData[i].charAt(0) === 'R'){
+                unitInstance = "Resistance"
+            }
+            tableValues[i] = [length[i], timeData[i], unitInstance, valueData[i]]
         }
     }
 
@@ -71,6 +80,55 @@ $(document).ready(function() {
         }
         myTableDiv.appendChild(table)
     }
+
+    function exportTableToCSV($table, filename) {
+
+        var $rows = $table.find('tr:has(td),tr:has(th)'),
+    
+            // Temporary delimiter characters unlikely to be typed by keyboard
+            // This is to avoid accidentally splitting the actual contents
+            tmpColDelim = String.fromCharCode(11), // vertical tab character
+            tmpRowDelim = String.fromCharCode(0), // null character
+    
+            // actual delimiter characters for CSV format
+            colDelim = '","',
+            rowDelim = '"\r\n"',
+    
+            // Grab text from table into CSV formatted string
+            csv = '"' + $rows.map(function (i, row) {
+                var $row = $(row), $cols = $row.find('td,th');
+    
+                return $cols.map(function (j, col) {
+                    var $col = $(col), text = $col.text();
+    
+                    return text.replace(/"/g, '""'); // escape double quotes
+    
+                }).get().join(tmpColDelim);
+    
+            }).get().join(tmpRowDelim)
+                .split(tmpRowDelim).join(rowDelim)
+                .split(tmpColDelim).join(colDelim) + '"',
+    
+            // Data URI
+            csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+    
+            if (window.navigator.msSaveBlob) { // IE 10+
+                //alert('IE' + csv);
+                window.navigator.msSaveOrOpenBlob(new Blob([csv], {type: "text/plain;charset=utf-8;"}), "csvname.csv")
+            } 
+            else {
+                $(this).attr({ 'download': filename, 'href': csvData, 'target': '_blank' }); 
+            }
+    }
+    
+    // This must be a hyperlink
+    $("#export").on('click', function (event) {
+    
+        exportTableToCSV.apply(this, [$('#loggedResults'), 'Recorded Measurements.csv']);
+    
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+    });
     
     turnOff()
     populateData()

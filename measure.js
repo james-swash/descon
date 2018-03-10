@@ -5,27 +5,30 @@ $(document).ready(function() {
     const html2canvas = require('html2canvas')
     
     var unit = 'V'
+    var unitType = 'DC'
     var range = 'm'
     var hold = false
     var runInt
     var loggedData = new Array()
     var timeData = new Array()
+    var unitData = new Array()
     var logDataFlag = 'N'
+    var recordCount = 0
+    var recordingArray = ['./images/Recording_50px.png', './images/Recordingflash_50px.png']
 
     function menu() {
 
         $(".menu").hide()
+        $(".modemenu").hide()
+        $(".rangemenu").hide()
+        $(".acdcmenu").hide()
 
         $(".toggleMenu").on('click', () => {
             $(".menu").toggle()
-            $(".modemenu").hide()
-            $(".rangemenu").hide()
             $("#mode").on('click', function() {
-                $('.modemenu').toggle()
-                $('.rangemenu').hide()
+                $('.modemenu').show()
             })
             $("#range").on('click', function() {
-                $('.modemenu').hide()
                 $('.rangemenu').toggle()
             })
         })
@@ -52,6 +55,19 @@ $(document).ready(function() {
             $("h1 #unitvalue").text(unit)
         })
         
+    }
+
+    function getUnitType() {
+        $("#AC").on('click', function(e){
+            unitType = 'AC'
+            console.log(unitType)
+            $(".attributes #acdc").text(unitType)
+        })
+        $("#DC").on('click', function(e){
+            unitType = 'DC'
+            $(".attributes #acdc").text(unitType)
+            console.log(unitType)
+        })
     }
 
     function getRange() {
@@ -118,8 +134,9 @@ $(document).ready(function() {
             })
     }
 
-
-
+    function blink(recordingFlag){
+        $('#imgHolder').delay(100).fadeTo(100,0.5).delay(100).fadeTo(100,1, blink);
+    }
     
     function display(logFlag) {
         var i = Math.random() * 12
@@ -130,22 +147,45 @@ $(document).ready(function() {
         if (logFlag === 'Y') {
             loggedData.push(i)
             timeData.push(timeNow())
+            unitData.push(unit+' '+unitType)
             localStorage.setItem('storedData', JSON.stringify(loggedData))
             localStorage.setItem('timeData', JSON.stringify(timeData))
+            localStorage.setItem('unitData', JSON.stringify(unitData))
+            console.log(loggedData)
+            console.log(timeData)
+            console.log(unitData)
+        }
+        else if (logFlag === 'C') {
+            localStorage.setItem('storedData', '')
+            localStorage.setItem('timeData', '')
+            localStorage.setItem('unitData', '')
         }
         else {
             loggedData = []
             timeData = []
+            unitData = []
         }
         
     }
 
     function timeNow() {
         var d = new Date();
-        return d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+        var hr = d.getHours();
+        var min = d.getMinutes();
+        var sec = d.getSeconds()
+        if (hr < 10) {
+            hr = "0" + hr
+        }
+        if (min < 10) {
+            min = "0" + min
+        }
+        if (sec < 10) {
+            sec = "0" + sec
+        }
+        return hr+":"+min+":"+sec
       }
 
-    function msg2Board(unit, range) {
+    function msg2Board(unit, unitType) {
         var mode;
         switch(unit) {
             case 'V':
@@ -159,10 +199,10 @@ $(document).ready(function() {
                 break
                 
         }
-        localStorage.setItem('unitData', unit)
-        return "MEASure:"+mode
+        return "MEASure:"+mode+':'+unitType+'?;'
     }
 
+    $("#imgHolder").hide()
 
     $('#hold').on('click', function(e) {
         if (hold) {
@@ -176,12 +216,23 @@ $(document).ready(function() {
     })
 
     $("#record").on('click', () => {
+        
         if (logDataFlag === 'Y') {
             logDataFlag = 'N'
+            $("#imgHolder").hide()
+        }
+        else if (logDataFlag === 'C') {
+            logDataFlag = 'N'
+            $("#imgHolder").hide()
         }
         else {
             logDataFlag = 'Y'
+            $("#imgHolder").show()
         }
+    })
+
+    $("#clearlog").on('click', () => {
+        logDataFlag = 'C'
     })
         
     runInt = setInterval(function() {display(logDataFlag)}, 1000)
@@ -189,8 +240,9 @@ $(document).ready(function() {
     turnOff()
     menu()
     getMode()
+    getUnitType()
     getRange()
     screenShot()
-    setInterval(function(){msg2Board(unit)}, 1000)
-
+    setInterval(function(){msg2Board(unit, unitType)}, 1000)
+    
 })

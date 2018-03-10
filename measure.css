@@ -96,7 +96,37 @@ ul {
     padding: -40px;
 }
 
-#dcac {
+#AC {
+    float: left;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    margin: 50px 100px;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    color: #000; 
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#DC {
+    float: left;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    margin: 50px -70px;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    color: #000; 
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#acdc {
     float: left;
 }
 
@@ -140,18 +170,52 @@ ul {
     padding: 5px 0;
 }
 
+#clearlog {
+    float: right;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    background: url(./images/Trash_64px.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin: 50px 20px;
+}
+
+#imgHolder {
+    float: right;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    background: url(./images/Recording_50px.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin: 50px 20px;
+
+    animation: blink 1s ease-in infinite;
+}
+
 #record {
     float: right;
-    bottom: 0;
+    bottom: 0px;
     padding: 5px 5px;
     background: url(./images/record_50px.png);
     background-size: cover;
     width: 20px;
     height: 20px;
+    margin: 50px 20px;
 }
 
 #record:hover {
     background: url(./images/recordhov_48px.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+#clearlog:hover {
+    background: url(./images/Trash_52px.png);
     background-size: cover;
     width: 20px;
     height: 20px;
@@ -206,3 +270,8 @@ ul {
     background: url(./images/Menuhov_64px.png);
     background-size: cover;
 }
+
+@keyframes blink {
+    from, to { opacity: 1 }
+    50% { opacity: 0 }
+  }
