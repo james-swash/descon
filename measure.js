@@ -7,8 +7,10 @@ $(document).ready(function() {
     var unit = 'V'
     var range = 'm'
     var hold = false
-
     var runInt
+    var loggedData = new Array()
+    var timeData = new Array()
+    var logDataFlag = 'N'
 
     function menu() {
 
@@ -116,13 +118,32 @@ $(document).ready(function() {
             })
     }
 
+
+
     
-    function display() {
+    function display(logFlag) {
         var i = Math.random() * 12
         i = Math.round(i * 1000) / 1000
             
         $("h1 #value").text(i)
+
+        if (logFlag === 'Y') {
+            loggedData.push(i)
+            timeData.push(timeNow())
+            localStorage.setItem('storedData', JSON.stringify(loggedData))
+            localStorage.setItem('timeData', JSON.stringify(timeData))
+        }
+        else {
+            loggedData = []
+            timeData = []
+        }
+        
     }
+
+    function timeNow() {
+        var d = new Date();
+        return d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+      }
 
     function msg2Board(unit, range) {
         var mode;
@@ -138,6 +159,7 @@ $(document).ready(function() {
                 break
                 
         }
+        localStorage.setItem('unitData', unit)
         return "MEASure:"+mode
     }
 
@@ -145,15 +167,24 @@ $(document).ready(function() {
     $('#hold').on('click', function(e) {
         if (hold) {
             hold = false
-            runInt = setInterval(display, 1000)
+            runInt = setInterval(function() {display(logDataFlag)}, 1000)
         }
         else {
             hold = true
             clearInterval(runInt)
         }
     })
+
+    $("#record").on('click', () => {
+        if (logDataFlag === 'Y') {
+            logDataFlag = 'N'
+        }
+        else {
+            logDataFlag = 'Y'
+        }
+    })
         
-    runInt = setInterval(display, 1000)
+    runInt = setInterval(function() {display(logDataFlag)}, 1000)
 
     turnOff()
     menu()

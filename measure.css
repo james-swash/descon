@@ -140,6 +140,23 @@ ul {
     padding: 5px 0;
 }
 
+#record {
+    float: right;
+    bottom: 0;
+    padding: 5px 5px;
+    background: url(./images/record_50px.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
+#record:hover {
+    background: url(./images/recordhov_48px.png);
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+}
+
 #off {
     float: right;
     background: url(./images/Shutdown_50px.png);
