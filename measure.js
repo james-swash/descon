@@ -1,8 +1,25 @@
 $(document).ready(function() {
+
     const electron = require('electron')
     const {remote} = require('electron')
     var win = remote.getCurrentWindow()   
     const html2canvas = require('html2canvas')
+
+    var ws = new WebSocket("ws://localhost:8000");
+    
+    ws.onopen = function()
+    {
+        console("Connected to WS");
+    };
+    
+    ws.onclose = function()
+    { 
+        console("Disconnected from WS");
+    };
+        
+    window.onbeforeunload = function(event) {
+        socket.close();
+    };
     
     var unit = 'V'
     var unitType = 'DC'
@@ -131,7 +148,8 @@ $(document).ready(function() {
             if(confirm("Are you sure you want to exit the application?")){
                 win.close()
                 }
-            })
+            }
+        )
     }
 
     function blink(recordingFlag){
@@ -139,32 +157,41 @@ $(document).ready(function() {
     }
     
     function display(logFlag) {
-        var i = Math.random() * 12
-        i = Math.round(i * 1000) / 1000
-            
-        $("h1 #value").text(i)
+    
+        ws.send(msg2Board(unit, unitType));
 
-        if (logFlag === 'Y') {
-            loggedData.push(i)
-            timeData.push(timeNow())
-            unitData.push(unit+' '+unitType)
-            localStorage.setItem('storedData', JSON.stringify(loggedData))
-            localStorage.setItem('timeData', JSON.stringify(timeData))
-            localStorage.setItem('unitData', JSON.stringify(unitData))
-            console.log(loggedData)
-            console.log(timeData)
-            console.log(unitData)
-        }
-        else if (logFlag === 'C') {
-            localStorage.setItem('storedData', '')
-            localStorage.setItem('timeData', '')
-            localStorage.setItem('unitData', '')
-        }
-        else {
-            loggedData = []
-            timeData = []
-            unitData = []
-        }
+        ws.onmessage = function (evt) 
+        { 
+            
+            var i = evt.data;
+           
+            console.log("Message received", i);
+
+            $("h1 #value").text(i)
+
+            if (logFlag === 'Y') {
+                loggedData.push(i)
+                timeData.push(timeNow())
+                unitData.push(unit+' '+unitType)
+                localStorage.setItem('storedData', JSON.stringify(loggedData))
+                localStorage.setItem('timeData', JSON.stringify(timeData))
+                localStorage.setItem('unitData', JSON.stringify(unitData))
+                console.log(loggedData)
+                console.log(timeData)
+                console.log(unitData)
+            }
+            else if (logFlag === 'C') {
+                localStorage.setItem('storedData', '')
+                localStorage.setItem('timeData', '')
+                localStorage.setItem('unitData', '')
+            }
+            else {
+                loggedData = []
+                timeData = []
+                unitData = []
+            }
+            
+        };
         
     }
 
@@ -196,8 +223,7 @@ $(document).ready(function() {
                 break
             case 'R':
                 mode = "RESIstance"
-                break
-                
+                break       
         }
         return "MEASure:"+mode+':'+unitType+'?;'
     }
