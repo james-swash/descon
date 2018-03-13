@@ -4,6 +4,7 @@ $(document).ready(function() {
     const {remote} = require('electron')
     var win = remote.getCurrentWindow()   
     const html2canvas = require('html2canvas')
+    const reader = new FileReader();
 
     var ws = new WebSocket("ws://localhost:8000");
     
@@ -158,14 +159,14 @@ $(document).ready(function() {
     
     function display(logFlag) {
     
-        ws.send(msg2Board(unit, unitType));
+        ws.send(msg2Board(unit, unitType))
 
         ws.onmessage = function (evt) 
         { 
             
-            var i = evt.data;
+            var i = reader.readAsText(evt.data)
            
-            console.log("Message received", i);
+            console.log("Message received", i)
 
             $("h1 #value").text(i)
 
