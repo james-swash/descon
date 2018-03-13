@@ -17,10 +17,6 @@ $(document).ready(function() {
     { 
         console("Disconnected from WS");
     };
-        
-    window.onbeforeunload = function(event) {
-        socket.close();
-    };
     
     var unit = 'V'
     var unitType = 'DC'
@@ -164,33 +160,39 @@ $(document).ready(function() {
         ws.onmessage = function (evt) 
         { 
             
-            var i = reader.readAsText(evt.data)
-           
-            console.log("Message received", i)
+            reader.readAsText(evt.data)
 
-            $("h1 #value").text(i)
+            reader.onload = function() {
 
-            if (logFlag === 'Y') {
-                loggedData.push(i)
-                timeData.push(timeNow())
-                unitData.push(unit+' '+unitType)
-                localStorage.setItem('storedData', JSON.stringify(loggedData))
-                localStorage.setItem('timeData', JSON.stringify(timeData))
-                localStorage.setItem('unitData', JSON.stringify(unitData))
-                console.log(loggedData)
-                console.log(timeData)
-                console.log(unitData)
-            }
-            else if (logFlag === 'C') {
-                localStorage.setItem('storedData', '')
-                localStorage.setItem('timeData', '')
-                localStorage.setItem('unitData', '')
-            }
-            else {
-                loggedData = []
-                timeData = []
-                unitData = []
-            }
+                var i = reader.result;
+
+                console.log("Message received", i)
+
+                $("h1 #value").text(i)
+    
+                if (logFlag === 'Y') {
+                    loggedData.push(i)
+                    timeData.push(timeNow())
+                    unitData.push(unit+' '+unitType)
+                    localStorage.setItem('storedData', JSON.stringify(loggedData))
+                    localStorage.setItem('timeData', JSON.stringify(timeData))
+                    localStorage.setItem('unitData', JSON.stringify(unitData))
+                    console.log(loggedData)
+                    console.log(timeData)
+                    console.log(unitData)
+                }
+                else if (logFlag === 'C') {
+                    localStorage.setItem('storedData', '')
+                    localStorage.setItem('timeData', '')
+                    localStorage.setItem('unitData', '')
+                }
+                else {
+                    loggedData = []
+                    timeData = []
+                    unitData = []
+                }
+
+            };            
             
         };
         
