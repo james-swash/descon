@@ -8,7 +8,7 @@ unit = 'V'
 unitType = 'DC'
 range = 'm'
 hold = false
-runInt
+runInt = null
 loggedData = new Array()
 timeData = new Array()
 unitData = new Array()
@@ -180,7 +180,7 @@ function display() {
 
             $("h1 #value").text(i)
 
-            if (logFlag === 'Y') {
+            if (logDataFlag === 'Y') {
                 loggedData.push(i)
                 timeData.push(timeNow())
                 unitData.push(unit+' '+unitType)
@@ -191,7 +191,7 @@ function display() {
                 console.log(timeData)
                 console.log(unitData)
             }
-            else if (logFlag === 'C') {
+            else if (logDataFlag === 'C') {
                 localStorage.setItem('storedData', '')
                 localStorage.setItem('timeData', '')
                 localStorage.setItem('unitData', '')
