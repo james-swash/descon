@@ -4,6 +4,7 @@ var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 const reader = new FileReader();
 
+myRe = new RegExp('(-?\d+(\.\d+)?(E\d+)?)', 'i')
 unit = 'V'
 unitType = 'DC'
 range = 'm'
@@ -175,6 +176,8 @@ function display() {
         reader.onload = function() {
 
             var i = reader.result;
+            var value = myRe.exec(i)
+            console.log(value)
 
             console.log("Message received", i)
 
