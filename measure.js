@@ -177,11 +177,11 @@ function display() {
 
             var i = reader.result;
             var value = myRe.exec(i)
-            console.log(value)
+            console.log(value[0])
 
             console.log("Message received", i)
 
-            $("h1 #value").text(i)
+            $("h1 #value").text(value[0])
 
             if (logDataFlag === 'Y') {
                 loggedData.push(i)
