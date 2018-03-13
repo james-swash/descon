@@ -153,9 +153,26 @@ $(document).ready(function() {
         $('#imgHolder').delay(100).fadeTo(100,0.5).delay(100).fadeTo(100,1, blink);
     }
     
-    function display(logFlag) {
+    function msg2Board() {
+        var mode;
+        switch(unit) {
+            case 'V':
+                mode = "VOLTage:"
+                break
+            case 'A':
+                mode = "CURRent:"
+                break
+            case 'R':
+                mode = "RESIstance"
+                break       
+        }
+        return "MEASure:"+mode+':'+unitType+'?;'
+    }
+
+    function display() {
     
-        ws.send(msg2Board(unit, unitType))
+        var command = msg2board()
+        ws.send(command)
 
         ws.onmessage = function (evt) 
         { 
@@ -215,21 +232,7 @@ $(document).ready(function() {
         return hr+":"+min+":"+sec
       }
 
-    function msg2Board(unit, unitType) {
-        var mode;
-        switch(unit) {
-            case 'V':
-                mode = "VOLTage:"
-                break
-            case 'A':
-                mode = "CURRent:"
-                break
-            case 'R':
-                mode = "RESIstance"
-                break       
-        }
-        return "MEASure:"+mode+':'+unitType+'?;'
-    }
+  
 
     $("#imgHolder").hide()
 
@@ -264,7 +267,7 @@ $(document).ready(function() {
         logDataFlag = 'C'
     })
         
-    runInt = setInterval(function() {display(logDataFlag)}, 1000)
+    runInt = setInterval(display, 1000)
 
     turnOff()
     menu()
@@ -272,6 +275,6 @@ $(document).ready(function() {
     getUnitType()
     getRange()
     screenShot()
-    setInterval(function(){msg2Board(unit, unitType)}, 1000)
+    setInterval(msg2Board, 1000)
     
 })
