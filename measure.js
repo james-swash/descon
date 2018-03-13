@@ -184,7 +184,7 @@ function display() {
             $("h1 #value").text(value[0])
 
             if (logDataFlag === 'Y') {
-                loggedData.push(i)
+                loggedData.push(value[0])
                 timeData.push(timeNow())
                 unitData.push(unit+' '+unitType)
                 localStorage.setItem('storedData', JSON.stringify(loggedData))
