@@ -4,17 +4,17 @@ var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 const reader = new FileReader();
 
-var unit = 'V'
-var unitType = 'DC'
-var range = 'm'
-var hold = false
-var runInt
-var loggedData = new Array()
-var timeData = new Array()
-var unitData = new Array()
-var logDataFlag = 'N'
+unit = 'V'
+unitType = 'DC'
+range = 'm'
+hold = false
+runInt
+loggedData = new Array()
+timeData = new Array()
+unitData = new Array()
+logDataFlag = 'N'
 
-var ws = new WebSocket("ws://localhost:8000");
+ws = new WebSocket("ws://localhost:8000");
     
 ws.onopen = function()
 {
@@ -149,10 +149,10 @@ function msg2Board() {
     var mode;
     switch(unit) {
         case 'V':
-            mode = "VOLTage:"
+            mode = "VOLTage"
             break
         case 'A':
-            mode = "CURRent:"
+            mode = "CURRent"
             break
         case 'R':
             mode = "RESIstance"
@@ -164,6 +164,7 @@ function msg2Board() {
 function display() {
 
     var command = msg2Board()
+    console.log(command);
     ws.send(command)
 
     ws.onmessage = function (evt) 
