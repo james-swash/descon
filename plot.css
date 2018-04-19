@@ -1,0 +1,187 @@
+header {
+    color: Black;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 8%;
+    margin: none;
+    padding: 0 20px;
+}
+
+body {
+    background:#cac9c9;
+    font-family: Helvetica, sans-serif;
+    font-size: 14;
+    height: 460px;
+    width: 750px;
+    align-content: center;
+    /* cursor: none; */
+}
+ul { 
+    list-style-type: none; 
+}
+
+.attributes {
+    width: 750px;
+    height: 50px;
+    float: top;
+    border-bottom: solid gray 2px;
+    font-size: 30px;
+    padding: 5px 10px;
+}
+
+.toggleMenu {
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url(./images/More_64px.png);
+    background-size: cover;
+}
+
+.menu {
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    position: relative;
+    color: black;
+    margin-left: -50px;
+    float: left;
+    width: 100px;
+    height: 300px;
+    text-align: left;
+    border-right: solid gray 2px;
+    z-index: 10;
+}
+
+.modemenu {
+    margin-top: -70px;
+    margin-left: 100px;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-right: solid gray 2px;
+    border-bottom: solid gray 2px;
+    text-align: left;
+    padding: -40px;
+}
+
+.rangemenu {
+    margin-top: -125px;
+    margin-left: 100px;
+    position: absolute;
+    width: 100px;
+    height: 230px;
+    border-right: solid gray 2px;
+    border-bottom: solid gray 2px;
+    text-align: left;
+    padding: -40px;
+}
+
+#AC {
+    float: left;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    margin: 50px 100px;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    color: #000; 
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#DC {
+    float: left;
+    top: 380px;
+    right: 50px;
+    padding: 5px 5px;
+    margin: 50px -70px;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    color: #000; 
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#acdc {
+    float: left;
+}
+
+#autorange {
+    float: right;
+}
+
+#mode {
+    margin-top: 20px;
+    padding: 15px 0;
+}
+#range {
+    padding: 15px 0;
+}
+#hold {
+    padding: 15px 0;
+}
+
+#screenshot {
+    padding: 15px 0;
+}
+
+#settings {
+    padding: 15px 0;
+}
+
+#voltage {
+    padding-left: -20px;
+}
+
+#current {
+    padding-bottom: 15px;
+    padding-left: -20px;
+}
+
+#resistance {
+    padding: 15px 0;
+}
+
+#mega, #kilo, #none, #milli, #micro, #nano, #pico {
+    padding: 5px 0;
+}
+
+#chartContainer {
+    width: 65%;
+    height: 65%;
+    margin-left: 280px;
+}
+
+#off:hover {
+    background: url(./images/Shutdownhov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home:hover {
+    background: url(./images/Homehov_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#off {
+    float: right;
+    background: url(./images/Shutdown_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#home {
+    float: left;
+    background: url(./images/Home_50px.png);
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}

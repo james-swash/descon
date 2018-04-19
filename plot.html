@@ -2,55 +2,220 @@
 <html>
 <head>
     <script>window.CanvasJS = require("./canvasjs.min.js");</script>
-    <script>window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');</script>
+	<script>window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');</script>
+	<title>Measure</title>
+	<link href="plot.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width:100%;"></div>
+	<header>Measure
+		<div id="off"></div>
+		<a href="./home.html"><div id="home"></div></a>
+	</header>
+	<div class=attributes>
+		<div id="acdc">DC</div>
+		<div id="autorange">Auto</div>
+	</div>
+	<div class="toggleMenu"></div>
+	<ul class="menu">
+			<li id="mode"><a href="#">Mode</a></li>
+			<ul class="modemenu">
+					<li id="voltage"><a href="#">Voltage</a></li>
+					<li id="resistance"><a href="#">Resistance</a></li>
+					<li id="current"><a href="#">Current</a></li>
+			</ul>
+		<li id="range"><a href="#">Range</a></li>
+			<ul class="rangemenu">
+				<li id="mega"><a href="#">Mega</a></li>
+				<li id="kilo"><a href="#">Kilo</a></li>
+				<li id="none"><a href="#">None</a></li>
+				<li id="milli"><a href="#">Milli</a></li>
+				<li id="micro"><a href="#">Micro</a></li>
+				<li id="nano"><a href="#">Nano</a></li>
+				<li id="pico"><a href="#">Pico</a></li>
+			</ul>
+			<li id="hold">Hold</li>
+			<li id="screenshot">Screenshot</li>
+			<li id="settings">Settings</li>
+	</ul>
+<div id="chartContainer"></div>
 
 <script>
 
 $(function(){
-var dps = []; // dataPoints
-var chart = new CanvasJS.Chart("chartContainer", {
-	title :{
-		text: "Dynamic Data"
-	},
-	axisY: {
-		includeZero: false
-	},      
-	data: [{
-		type: "line",
-		dataPoints: dps
-	}]
-});
+	const electron = require('electron')
+	const {remote} = require('electron')
+	const Websocket = require('./websocket')
+	var win = remote.getCurrentWindow()
+	const ws = new Websocket(true);
 
-var xVal = 0;
-var yVal = 100; 
-var updateInterval = 1000;
-var dataLength = 20; // number of dataPoints visible at any point
+	unit = 'V'	
+	myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
+	unitType = 'DC'
+	range = ''
+	hold = false
+	var dps = []; // dataPoints
+	var chart = new CanvasJS.Chart("chartContainer", {
+		title :{
+			text: ""
+		},
+		axisY: {
+			includeZero: false
+		},      
+		data: [{
+			type: "line",
+			dataPoints: dps
+		}]
+	});
 
-var updateChart = function (count) {
+	var updateInterval = 1000;
+	var dataLength = 20; // number of dataPoints visible at any point
 
-	count = count || 1;
+    $(".modemenu").hide()
+    $(".rangemenu").hide()
+    $(".acdcmenu").hide()
 
-	for (var j = 0; j < count; j++) {
-		yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+	$("#mode").on('click', function() {
+		$('.modemenu').toggle()
+	})
+	$("#range").on('click', function() {
+		$('.rangemenu').toggle()
+	})
+	$("#off").on('click', () => {
+        if(confirm("Are you sure you want to exit the application?")){
+            win.close()
+            }
+        }
+	)
+
+
+	function display(callback) {
+		var command = msg2Board()
+		// console.log(command);
+
+		ws.send(command, function (i) {
+			// console.log(i);
+			var value = myRe.exec(i)
+			 console.log("regex",value[0])
+			// console.log("Message received", i)
+			callback(Number.parseFloat(value[0]))
+		})
+		
+	}
+
+	function getMode() {
+		$("#voltage").on('click', function(e) {
+			unit = 'V'
+			$('.modemenu').toggle()
+			$("h1 #unitvalue").text(unit)
+		})
+		$("#current").on('click', function(e) {
+			unit = 'A'
+			$('.modemenu').toggle()
+			$("h1 #unitvalue").text(unit)
+		})
+		$("#resistance").on('click', function(e) {
+			unit = 'R'
+			$('.modemenu').toggle()
+			$("h1 #unitvalue").text(unit)
+		})
+		
+	}
+
+	function getUnitType() {
+		$("#AC").on('click', function(e){
+			unitType = 'AC'
+			console.log(unitType)
+			$(".attributes #acdc").text(unitType)
+		})
+		$("#DC").on('click', function(e){
+			unitType = 'DC'
+			$(".attributes #acdc").text(unitType)
+			console.log(unitType)
+		})
+	}
+	
+	function getRange() {
+		$('#mega').on('click', function(e) {
+			range = 'M'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#kilo').on('click', function(e) {
+			range = 'k'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#none').on('click', function(e) {
+			range = ''
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#milli').on('click', function(e) {
+			range = 'm'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#micro').on('click', function(e) {
+			range = 'u'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#nano').on('click', function(e) {
+			range = 'n'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+		$('#pico').on('click', function(e) {
+			range = 'p'
+			$('.rangemenu').toggle()
+			$("h1 #rangevalue").text(range)
+		})
+
+	}
+
+	function msg2Board() {
+		var mode;
+		switch(unit) {
+			case 'V':
+				mode = "VOLTage"
+				break
+			case 'A':
+				mode = "CURRent"
+				break
+			case 'R':
+				mode = "RESIstance"
+				break       
+		}
+		return "MEASure:"+mode+':'+unitType+'?;'
+	}
+
+	var updateChart = function (count) {
+
+		display(function(value){
+
 		dps.push({
-			x: xVal,
-			y: yVal
-		});
-		xVal++;
+			x: new Date(),
+			y: value
+		})
+
+		console.log(dps)
+
+		if (dps.length > dataLength) {
+			dps.shift()
+		}
+
+		chart.render()
+
+		})
+
 	}
 
-	if (dps.length > dataLength) {
-		dps.shift();
-	}
-
-	chart.render();
-};
-
-updateChart(dataLength);
-setInterval(function(){updateChart()}, updateInterval);
+	setInterval(msg2Board, 1000)
+	updateChart(dataLength);
+	setInterval(function(){updateChart()}, updateInterval);
+	getRange()
+	getMode()
+	getUnitType()
 
 });
 </script>
