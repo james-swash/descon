@@ -141,15 +141,18 @@ function msg2Board() {
     switch(unit) {
         case 'V':
             mode = "VOLTage"
+            return "MEASure:" + mode+':' + unitType + '?;'
             break
         case 'A':
             mode = "CURRent"
+            return "MEASure:" + mode + '?;'
             break
         case 'R':
             mode = "RESIstance"
+            return "MEASure:" + mode + '?;'
             break       
     }
-    return "MEASure:"+mode+':'+unitType+'?;'
+    
 }
 
 function display() {

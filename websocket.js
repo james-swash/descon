@@ -36,6 +36,8 @@ function Websocket(testing) {
 
 Websocket.prototype.send = function (comm, clb) {
 
+    console.log(comm);
+
     if (this.testing) {
 
         if (!(comm in commands)) {
@@ -50,6 +52,7 @@ Websocket.prototype.send = function (comm, clb) {
             reader.readAsText(evt.data);
             reader.onload = function () {
                 clb(reader.result);
+                console.log(comm);
             }
         };
     } else {
