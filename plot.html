@@ -87,17 +87,23 @@ $(function(){
         }
 	)
 
-
 	function display(callback) {
 		var command = msg2Board()
 		// console.log(command);
 
 		ws.send(command, function (i) {
 			// console.log(i);
-			var value = myRe.exec(i)
-			 console.log("regex",value[0])
-			// console.log("Message received", i)
-			callback(Number.parseFloat(value[0]))
+
+			if(i == null) {
+				callback(null);
+			} else {
+				
+				var value = myRe.exec(i)
+				console.log("regex",value[0])
+				// console.log("Message received", i)
+				callback(Number.parseFloat(value[0]))
+
+			}
 		})
 		
 	}
@@ -193,18 +199,22 @@ $(function(){
 
 		display(function(value){
 
-		dps.push({
-			x: new Date(),
-			y: value
-		})
+			if(value !== null) {
 
-		console.log(dps)
+				dps.push({
+					x: new Date(),
+					y: value
+				})
 
-		if (dps.length > dataLength) {
-			dps.shift()
-		}
+				console.log(dps)
 
-		chart.render()
+				if (dps.length > dataLength) {
+					dps.shift()
+				}
+
+				chart.render()
+
+			}
 
 		})
 
