@@ -9,112 +9,256 @@ const ws = new Websocket(true);
 myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 unit = 'V'
 unitType = 'DC'
-range = ''
+// range = ''
 hold = false
 runInt = null
 loggedData = new Array()
 timeData = new Array()
 unitData = new Array()
 logDataFlag = 'N'
+commandMsg = 'MEASure:VOLTage:AC?;'
+rangeVal = 0
 
 function menu() {
 
-    $(".menu").hide()
     $(".modemenu").hide()
     $(".rangemenu").hide()
     $(".acdcmenu").hide()
 
-    $(".toggleMenu").on('click', () => {
-        $(".menu").toggle()
-        $("#mode").on('click', function() {
-            $('.modemenu').show()
-        })
-        $("#range").on('click', function() {
-            $('.rangemenu').toggle()
-        })
-    })
+	$("#mode").on('click', function() {
+		$('.modemenu').toggle()
+	})
+	$("#range").on('click', function() {
+		$('.rangemenu').toggle()
+	})
 
 }
 
 function getMode() {
-    $("#voltage").on('click', function(e) {
+    $("#voltage_AC").on('click', function(e) {
         unit = 'V'
+        unitType = 'AC'
         $('.modemenu').toggle()
-        $('.menu').toggle()
         $("h1 #unitvalue").text(unit)
+        $(".attributes #acdc").text('AC')
+        $(".rangemenu #zero").text('-10 to 10 V')
+        $(".rangemenu #one").text('-1 to 1 V')
+        $(".rangemenu #two").text('-100 to 100 mV')
+        switch(rangeVal) {
+            case 0:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Voltage | -10 to 10 V')
+                break
+            case 1:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -1 to 1 V')
+                break
+            case 2:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -100 to 100 mV')
+                break       
+            case 3:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Voltage | Auto')
+                break       
+        }
+        commandMsg = 'MEASure:VOLTage:AC?;'
+    })
+    $("#voltage_DC").on('click', function(e) {
+        unit = 'V'
+        unitType = 'DC'
+        $('.modemenu').toggle()
+        $("h1 #unitvalue").text(unit)
+        $(".attributes #acdc").text('DC')
+        $(".rangemenu #zero").text('-10 to 10 V')
+        $(".rangemenu #one").text('-1 to 1 V')
+        $(".rangemenu #two").text('-100 to 100 mV')
+        switch(rangeVal) {
+            case 0:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Voltage | -10 to 10 V')
+                break
+            case 1:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -1 to 1 V')
+                break
+            case 2:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -100 to 100 mV')
+                break       
+            case 3:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Voltage | Auto')
+                break       
+        }
+        commandMsg = 'MEASure:VOLTage:DC?;'
     })
     $("#current").on('click', function(e) {
         unit = 'A'
+        unitType = ''
         $('.modemenu').toggle()
-        $('.menu').toggle()
         $("h1 #unitvalue").text(unit)
+        $(".attributes #acdc").text('')
+        $(".rangemenu #zero").text('-1 to 1 A')
+        $(".rangemenu #one").text('-100 to 100 mA')
+        $(".rangemenu #two").text('-10 to 10 mA')
+        switch(rangeVal) {
+            case 0:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -1 to 1 A')
+                break
+            case 1:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -100 to 100 mA')
+                break
+            case 2:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -10 to 10 mA')
+                break       
+            case 3:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Current | Auto')
+                break       
+        }
+        commandMsg = 'MEASure:CURRent?;'
     })
     $("#resistance").on('click', function(e) {
         unit = 'R'
+        unitType = ''
         $('.modemenu').toggle()
-        $('.menu').toggle()
         $("h1 #unitvalue").text(unit)
+        $(".attributes #acdc").text('')
+        $(".rangemenu #zero").text('10 to 10k Ohm')
+        $(".rangemenu #one").text('100 to 100k Ohm')
+        $(".rangemenu #two").text('1k to 1M Ohm')
+        switch(rangeVal) {
+            case 0:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
+                break
+            case 1:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
+                break
+            case 2:
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
+                break       
+            case 3:
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Resistance | Auto')
+                break       
+        }
+        commandMsg = 'MEASure:RESIstance?;'
     })
     
 }
 
-function getUnitType() {
-    $("#AC").on('click', function(e){
-        unitType = 'AC'
-        console.log(unitType)
-        $(".attributes #acdc").text(unitType)
-    })
-    $("#DC").on('click', function(e){
-        unitType = 'DC'
-        $(".attributes #acdc").text(unitType)
-        console.log(unitType)
-    })
-}
+// function getUnitType() {
+//     $("#AC").on('click', function(e){
+//         unitType = 'AC'
+//         console.log(unitType)
+//         $(".attributes #acdc").text(unitType)
+//     })
+//     $("#DC").on('click', function(e){
+//         unitType = 'DC'
+//         $(".attributes #acdc").text(unitType)
+//         console.log(unitType)
+//     })
+// }
 
 function getRange() {
-    $('#mega').on('click', function(e) {
-        range = 'M'
+    $('#zero').on('click', function(e) {
         $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
+        $(".attributes #autorange").text('')
+        commandMsg = 'RANGE 0;'
+        rangeVal = 0
+        switch(unit) {
+            case 'V':
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Voltage | -10 to 10 V')
+                break
+            case 'A':
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -1 to 1 A')
+                break
+            case 'R':
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
+                break       
+        }
     })
-    $('#kilo').on('click', function(e) {
-        range = 'k'
+    $('#one').on('click', function(e) {
         $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
+        $(".attributes #autorange").text('')
+        commandMsg = 'RANGE 1;'
+        rangeVal = 1
+        switch(unit) {
+            case 'V':
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -1 to 1 V')
+                break
+            case 'A':
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -100 to 100 mA')
+                break
+            case 'R':
+                $("h1 #rangevalue").text('')
+                $(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
+                break       
+        }
     })
-    $('#none').on('click', function(e) {
-        range = ''
+    $('#two').on('click', function(e) {
         $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
+        $(".attributes #autorange").text('')
+        commandMsg = 'RANGE 2;'
+        rangeVal = 2
+        switch(unit) {
+            case 'V':
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Voltage | -100 to 100 mV')
+                break
+            case 'A':
+                $("h1 #rangevalue").text('m')
+                $(".attributes #autorange").text('Current | -10 to 10 mA')
+                break
+            case 'R':
+                $("h1 #rangevalue").text('k')
+                $(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
+                break       
+        }
     })
-    $('#milli').on('click', function(e) {
-        range = 'm'
+    $('#auto').on('click', function(e) {
         $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
-    })
-    $('#micro').on('click', function(e) {
-        range = 'u'
-        $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
-    })
-    $('#nano').on('click', function(e) {
-        range = 'n'
-        $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
-    })
-    $('#pico').on('click', function(e) {
-        range = 'p'
-        $('.rangemenu').toggle()
-        $('.menu').toggle()
-        $("h1 #rangevalue").text(range)
+        $("h1 #rangevalue").text('')
+        rangeVal = 3
+        switch(unit) {
+            case 'V':
+                $(".attributes #autorange").text('Voltage | Auto')
+                break
+            case 'A':
+                $(".attributes #autorange").text('Current | Auto')
+                break
+            case 'R':
+                $(".attributes #autorange").text('Resistance | Auto')
+                break       
+        }
+        commandMsg = 'RANGE AUTO;'
     })
 
+}
+
+function getAudio() {
+    $('#settings').on('click', function(e){
+        if($('#settings').text() === 'Audio: On'){
+            commandMsg = 'Audio: Off;'
+            $('#settings').text('Audio: Off')
+        }
+        else {
+            commandMsg = 'Audio: On;'
+            $('#settings').text('Audio: On')
+        }
+    })
 }
 
 function screenShot() {
@@ -136,29 +280,29 @@ function turnOff() {
     )
 }
 
-function msg2Board() {
-    var mode;
-    switch(unit) {
-        case 'V':
-            mode = "VOLTage"
-            return "MEASure:" + mode+':' + unitType + '?;'
-            break
-        case 'A':
-            mode = "CURRent"
-            return "MEASure:" + mode + '?;'
-            break
-        case 'R':
-            mode = "RESIstance"
-            return "MEASure:" + mode + '?;'
-            break       
-    }
+// function msg2Board() {
+//     var mode;
+//     switch(unit) {
+//         case 'V':
+//             mode = "VOLTage"
+//             return "MEASure:" + mode+':' + unitType + '?;'
+//             break
+//         case 'A':
+//             mode = "CURRent"
+//             return "MEASure:" + mode + '?;'
+//             break
+//         case 'R':
+//             mode = "RESIstance"
+//             return "MEASure:" + mode + '?;'
+//             break       
+//     }
     
-}
+// }
 
 function display() {
 
-    var command = msg2Board()
-    console.log(command);
+    var command = commandMsg
+    console.log(command)
 
     ws.send(command, function (i) {
 
@@ -245,7 +389,9 @@ $(function() {
     })
 
     $("#clearlog").on('click', () => {
-        logDataFlag = 'C'
+        if(confirm("Are you sure you want remove logged data?")){
+            logDataFlag = 'C'
+        }
     })
         
     runInt = setInterval(display, 1000)
@@ -253,9 +399,10 @@ $(function() {
     turnOff()
     menu()
     getMode()
-    getUnitType()
+    getAudio()
+    // getUnitType()
     getRange()
     screenShot()
-    setInterval(msg2Board, 1000)
+    // setInterval(msg2Board, 1000)
     
 })

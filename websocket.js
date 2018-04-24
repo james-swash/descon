@@ -4,10 +4,8 @@ const commands = {
     '*IDN?': () => "TESTING IDENT",
     'MEASure:VOLTage:AC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
     'MEASure:VOLTage:DC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:CURRent:DC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:CURRent:AC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:RESIstance:DC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:RESIstance:AC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
+    'MEASure:CURRent?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
+    'MEASure:RESIstance?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
 };
 
 var connected = false;

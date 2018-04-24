@@ -24,13 +24,13 @@ a {
 
 .grid {
     display: grid;
-    height: 250px;
-    width: 500px;
-    grid-template: 1fr 1fr / 1fr 1fr;
+    height: 300px;
+    width: 600px;
+    grid-template: 1fr / 1fr 1fr 1fr;
     grid-gap: 75px 75px;
     position: relative;
     top: 10%;
-    left: 20%;
+    left: 12%;
     justify-content: center;
 }
 
