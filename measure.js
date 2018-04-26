@@ -16,7 +16,7 @@ loggedData = new Array()
 timeData = new Array()
 unitData = new Array()
 logDataFlag = 'N'
-commandMsg = 'MEASure:VOLTage:AC?;'
+commandMsg = 'MEASure:VOLTage:DC?;'
 rangeVal = 0
 
 function menu() {
@@ -44,6 +44,7 @@ function getMode() {
         $(".rangemenu #zero").text('-10 to 10 V')
         $(".rangemenu #one").text('-1 to 1 V')
         $(".rangemenu #two").text('-100 to 100 mV')
+        $("#continuity").text("")
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('')
@@ -73,6 +74,7 @@ function getMode() {
         $(".rangemenu #zero").text('-10 to 10 V')
         $(".rangemenu #one").text('-1 to 1 V')
         $(".rangemenu #two").text('-100 to 100 mV')
+        $("#continuity").text("")
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('')
@@ -102,6 +104,7 @@ function getMode() {
         $(".rangemenu #zero").text('-1 to 1 A')
         $(".rangemenu #one").text('-100 to 100 mA')
         $(".rangemenu #two").text('-10 to 10 mA')
+        $("#continuity").text("")
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('m')
@@ -131,6 +134,7 @@ function getMode() {
         $(".rangemenu #zero").text('10 to 10k Ohm')
         $(".rangemenu #one").text('100 to 100k Ohm')
         $(".rangemenu #two").text('1k to 1M Ohm')
+        $("#continuity").text("Continuity: Off")
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('')
@@ -257,6 +261,21 @@ function getAudio() {
         else {
             commandMsg = 'Audio: On;'
             $('#settings').text('Audio: On')
+        }
+    })
+}
+
+function getContinuity() {
+    $('#continuity').on('click', function(e){
+        if(unit === 'R'){
+            if ($("#continuity").text() === "Continuity: Off"){
+                commandMsg = 'CONTinuity: On'
+                $("#continuity").text("Continuity: On")
+            }
+            else {
+                commandMsg = 'CONTinuity: Off'
+                $("#continuity").text("Continuity: Off")
+            }
         }
     })
 }

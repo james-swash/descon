@@ -29,7 +29,7 @@ a {
     grid-template: 1fr / 1fr 1fr 1fr;
     grid-gap: 75px 75px;
     position: relative;
-    top: 10%;
+    top: 25%;
     left: 12%;
     justify-content: center;
 }
