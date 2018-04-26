@@ -4,7 +4,7 @@ const Websocket = require('./websocket')
 var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 
-const ws = new Websocket(true);
+const ws = new Websocket(false);
 
 myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 unit = 'V'
@@ -272,12 +272,12 @@ function addContinuityHandler() {
     $('#continuity').on('click', function (e) {
         if (unit === 'R') {
             if (cont) {
-                commandMsg = 'CONTinuity: Off'
+                commandMsg = 'CONTinuity Off;'
                 $("#continuity").text("Continuity: Off")
                 cont = false;
             }
             else {
-                commandMsg = 'CONTinuity: On'
+                commandMsg = 'CONTinuity On;'
                 $("#continuity").text("Continuity: On")
                 cont = true;
             }
@@ -332,35 +332,42 @@ function display() {
     ws.send(command, function (i) {
 
         console.log(i);
-        var value = myRe.exec(i)
-        console.log(value[0])
+        try {
+            var value = myRe.exec(i)
 
-        console.log("Message received", i)
+            console.log(value[0])
 
-        $("h1 #value").text(value[0])
+            console.log("Message received", i)
+    
+            $("h1 #value").text(value[0])
+    
+            if (logDataFlag === 'Y') {
+                loggedData.push(value[0])
+                timeData.push(timeNow())
+                unitData.push(unit + ' ' + unitType)
+                localStorage.setItem('storedData', JSON.stringify(loggedData))
+                localStorage.setItem('timeData', JSON.stringify(timeData))
+                localStorage.setItem('unitData', JSON.stringify(unitData))
+                console.log(loggedData)
+                console.log(timeData)
+                console.log(unitData)
+            }
+            else if (logDataFlag === 'C') {
+                localStorage.setItem('storedData', '')
+                localStorage.setItem('timeData', '')
+                localStorage.setItem('unitData', '')
+            }
+            else {
+                loggedData = []
+                timeData = []
+                unitData = []
+            }
 
-        if (logDataFlag === 'Y') {
-            loggedData.push(value[0])
-            timeData.push(timeNow())
-            unitData.push(unit + ' ' + unitType)
-            localStorage.setItem('storedData', JSON.stringify(loggedData))
-            localStorage.setItem('timeData', JSON.stringify(timeData))
-            localStorage.setItem('unitData', JSON.stringify(unitData))
-            console.log(loggedData)
-            console.log(timeData)
-            console.log(unitData)
         }
-        else if (logDataFlag === 'C') {
-            localStorage.setItem('storedData', '')
-            localStorage.setItem('timeData', '')
-            localStorage.setItem('unitData', '')
+        catch(err){
+            console.error(err);
         }
-        else {
-            loggedData = []
-            timeData = []
-            unitData = []
-        }
-
+        
     });
 
 }
