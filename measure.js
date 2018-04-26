@@ -328,34 +328,37 @@ function display() {
         try {
             if (command.charAt(n-2) === '?'){
                 var value = myRe.exec(i)
+                if (value[1].trim().length > 0) {
+                    console.log(value[1])
 
-                console.log(value[1])
+                    console.log("Message received", i)
+            
+                    $("h1 #value").text(value[1])
+            
+                    if (logDataFlag === 'Y') {
+                        loggedData.push(parseEng(value[1]))
+                        timeData.push(timeNow())
+                        unitData.push(unit + ' ' + unitType)
+                        localStorage.setItem('storedData', JSON.stringify(loggedData))
+                        localStorage.setItem('timeData', JSON.stringify(timeData))
+                        localStorage.setItem('unitData', JSON.stringify(unitData))
+                        console.log(loggedData)
+                        console.log(timeData)
+                        console.log(unitData)
+                    }
+                    else if (logDataFlag === 'C') {
+                        localStorage.setItem('storedData', '')
+                        localStorage.setItem('timeData', '')
+                        localStorage.setItem('unitData', '')
+                    }
+                    else {
+                        loggedData = []
+                        timeData = []
+                        unitData = []
+                    }
+                }
 
-                console.log("Message received", i)
-        
-                $("h1 #value").text(value[1])
-        
-                if (logDataFlag === 'Y') {
-                    loggedData.push(parseEng(value[1]))
-                    timeData.push(timeNow())
-                    unitData.push(unit + ' ' + unitType)
-                    localStorage.setItem('storedData', JSON.stringify(loggedData))
-                    localStorage.setItem('timeData', JSON.stringify(timeData))
-                    localStorage.setItem('unitData', JSON.stringify(unitData))
-                    console.log(loggedData)
-                    console.log(timeData)
-                    console.log(unitData)
-                }
-                else if (logDataFlag === 'C') {
-                    localStorage.setItem('storedData', '')
-                    localStorage.setItem('timeData', '')
-                    localStorage.setItem('unitData', '')
-                }
-                else {
-                    loggedData = []
-                    timeData = []
-                    unitData = []
-                }
+                
 
             }
         }
