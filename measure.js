@@ -7,7 +7,7 @@ const parseEng = require('parse-eng')
 
 const ws = new Websocket(true);
 
-myRe = new RegExp(/^.*\s(.*)$/, 'i')
+myRe = new RegExp(/^.*\s(.*)\n$/, 'i')
 unit = 'V'
 unitType = 'DC'
 // range = ''
@@ -329,14 +329,14 @@ function display() {
             if (command.charAt(n-2) === '?'){
                 var value = myRe.exec(i)
 
-                console.log(value[0])
+                console.log(value[1])
 
                 console.log("Message received", i)
         
-                $("h1 #value").text(value[0])
+                $("h1 #value").text(value[1])
         
                 if (logDataFlag === 'Y') {
-                    loggedData.push(parseEng(value[0]))
+                    loggedData.push(parseEng(value[1]))
                     timeData.push(timeNow())
                     unitData.push(unit + ' ' + unitType)
                     localStorage.setItem('storedData', JSON.stringify(loggedData))

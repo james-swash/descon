@@ -1,11 +1,12 @@
 const reader = new FileReader();
+const siArray = ['', 'm', 'k']
 
 const commands = {
     '*IDN?': () => "TESTING IDENT",
-    'MEASure:VOLTage:AC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:VOLTage:DC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:CURRent?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
-    'MEASure:RESIstance?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6),
+    'MEASure:VOLTage:AC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6)+(siArray[Math.floor(Math.random()*3)]),
+    'MEASure:VOLTage:DC?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6)+(siArray[Math.floor(Math.random()*3)]),
+    'MEASure:CURRent?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6)+(siArray[Math.floor(Math.random()*3)]),
+    'MEASure:RESIstance?;': () => ((Math.random() * 2000) - 1000 / (Math.random() * 100)).toFixed(6)+(siArray[Math.floor(Math.random()*3)]),
 
 };
 
@@ -42,7 +43,7 @@ Websocket.prototype.send = function (comm, clb) {
         if (!(comm in commands)) {
             clb("TEST MODE ERROR");
         } else {
-            clb(commands[comm]());
+            clb(commands[comm]() + '\n');
         }
 
     } else if(connected) {
