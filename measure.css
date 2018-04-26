@@ -158,6 +158,7 @@ ul {
 }
 
 #voltage_AC {
+    margin-top: 20px;
     padding-bottom: 15px;
     padding-left: -20px;
 }
@@ -171,7 +172,11 @@ ul {
     padding: 15px 0;
 }
 
-#zero, #one, #two, #auto {
+#zero {
+    margin-top: 20px;
+    padding: 5px 0;
+}
+#one, #two, #auto {
     padding: 5px 0;
 }
 

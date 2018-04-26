@@ -3,10 +3,11 @@ const {remote} = require('electron')
 const Websocket = require('./websocket')
 var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
+const parseEng = require('parse-eng')
 
-const ws = new Websocket(false);
+const ws = new Websocket(true);
 
-myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
+myRe = new RegExp(/^.*\s(.*)$/, 'i')
 unit = 'V'
 unitType = 'DC'
 // range = ''
@@ -138,15 +139,15 @@ function getMode() {
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('')
-                $(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
+                $(".attributes #autorange").text('Resistance | 100k to 1M Ohm')
                 break
             case 1:
                 $("h1 #rangevalue").text('m')
-                $(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
+                $(".attributes #autorange").text('Resistance | 10k to 100k Ohm')
                 break
             case 2:
                 $("h1 #rangevalue").text('m')
-                $(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
+                $(".attributes #autorange").text('Resistance | 0 to 10k Ohm')
                 break       
             case 3:
                 $("h1 #rangevalue").text('')
@@ -179,16 +180,13 @@ function getRange() {
         rangeVal = 0
         switch(unit) {
             case 'V':
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Voltage | -10 to 10 V')
                 break
             case 'A':
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -1 to 1 A')
                 break
             case 'R':
-                $("h1 #rangevalue").text('')
-                $(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
+                $(".attributes #autorange").text('Resistance | 100k to 1M Ohm')
                 break       
         }
     })
@@ -199,16 +197,13 @@ function getRange() {
         rangeVal = 1
         switch(unit) {
             case 'V':
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | -1 to 1 V')
                 break
             case 'A':
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -100 to 100 mA')
                 break
             case 'R':
-                $("h1 #rangevalue").text('')
-                $(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
+                $(".attributes #autorange").text('Resistance | 10k to 100k Ohm')
                 break       
         }
     })
@@ -219,16 +214,13 @@ function getRange() {
         rangeVal = 2
         switch(unit) {
             case 'V':
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | -100 to 100 mV')
                 break
             case 'A':
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -10 to 10 mA')
                 break
             case 'R':
-                $("h1 #rangevalue").text('k')
-                $(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
+                $(".attributes #autorange").text('Resistance | 0 to 10k Ohm')
                 break       
         }
     })
@@ -328,41 +320,44 @@ function display() {
 
     var command = commandMsg
     console.log(command)
+    var n = command.length
 
     ws.send(command, function (i) {
 
         console.log(i);
         try {
-            var value = myRe.exec(i)
+            if (command.charAt(n-2) === '?'){
+                var value = myRe.exec(i)
 
-            console.log(value[0])
+                console.log(value[0])
 
-            console.log("Message received", i)
-    
-            $("h1 #value").text(value[0])
-    
-            if (logDataFlag === 'Y') {
-                loggedData.push(value[0])
-                timeData.push(timeNow())
-                unitData.push(unit + ' ' + unitType)
-                localStorage.setItem('storedData', JSON.stringify(loggedData))
-                localStorage.setItem('timeData', JSON.stringify(timeData))
-                localStorage.setItem('unitData', JSON.stringify(unitData))
-                console.log(loggedData)
-                console.log(timeData)
-                console.log(unitData)
-            }
-            else if (logDataFlag === 'C') {
-                localStorage.setItem('storedData', '')
-                localStorage.setItem('timeData', '')
-                localStorage.setItem('unitData', '')
-            }
-            else {
-                loggedData = []
-                timeData = []
-                unitData = []
-            }
+                console.log("Message received", i)
+        
+                $("h1 #value").text(value[0])
+        
+                if (logDataFlag === 'Y') {
+                    loggedData.push(parseEng(value[0]))
+                    timeData.push(timeNow())
+                    unitData.push(unit + ' ' + unitType)
+                    localStorage.setItem('storedData', JSON.stringify(loggedData))
+                    localStorage.setItem('timeData', JSON.stringify(timeData))
+                    localStorage.setItem('unitData', JSON.stringify(unitData))
+                    console.log(loggedData)
+                    console.log(timeData)
+                    console.log(unitData)
+                }
+                else if (logDataFlag === 'C') {
+                    localStorage.setItem('storedData', '')
+                    localStorage.setItem('timeData', '')
+                    localStorage.setItem('unitData', '')
+                }
+                else {
+                    loggedData = []
+                    timeData = []
+                    unitData = []
+                }
 
+            }
         }
         catch(err){
             console.error(err);
