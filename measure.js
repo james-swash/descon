@@ -4,7 +4,7 @@ const Websocket = require('./websocket')
 var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 
-const ws = new Websocket(false);
+const ws = new Websocket(true);
 
 myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 unit = 'V'
@@ -24,7 +24,7 @@ function menu() {
     $(".modemenu").hide()
     $(".rangemenu").hide()
     $(".acdcmenu").hide()
-
+    $('#continuity').hide()
 	$("#mode").on('click', function() {
 		$('.modemenu').toggle()
 	})
