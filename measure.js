@@ -4,7 +4,7 @@ const Websocket = require('./websocket')
 var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 
-const ws = new Websocket(true);
+const ws = new Websocket(false);
 
 myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 unit = 'V'

@@ -44,7 +44,7 @@ $(function(){
 	const {remote} = require('electron')
 	const Websocket = require('./websocket')
 	var win = remote.getCurrentWindow()
-	const ws = new Websocket(true);
+	const ws = new Websocket(false);
 
 	myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 	unit = 'V'
@@ -95,11 +95,14 @@ $(function(){
 		ws.send(command, function (i) {
 			// console.log(i);
 
-			if(i == null) {
+			if(i === null) {
 				callback(null);
 			} else {
 				
 				var value = myRe.exec(i)
+
+				console.log(i);
+
 				console.log("regex",value[0])
 				// console.log("Message received", i)
 				callback(Number.parseFloat(value[0]))
@@ -353,7 +356,7 @@ $(function(){
 					y: value
 				})
 
-				console.log(dps)
+				//console.log(dps)
 
 				if (dps.length > dataLength) {
 					dps.shift()
