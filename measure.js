@@ -5,7 +5,7 @@ var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 const parseEng = require('parse-eng')
 
-const ws = new Websocket(false);
+const ws = new Websocket(true);
 
 myRe = new RegExp(/^.*\s(.*)\n$/, 'i')
 unit = 'V'
@@ -276,6 +276,21 @@ function addContinuityHandler() {
         }
     })
 
+}
+
+function tempReading() {
+    let temp = false;
+    command = "MEASure: TEMP?;"
+    ws.send(command, function (i) {
+        console.log(i)
+        var temp_info = exec(i)
+        console.log(temp_info)      
+        // $("#temp").text(temp_info[0])
+        // $("#pressure").text(temp_info[1])
+        // $("#alt").text(temp_info[2])
+        // $("#sealvl").text(temp_info[3])
+        // $("#humid").text(temp_info[4])
+    })
 }
 
 function screenShot() {

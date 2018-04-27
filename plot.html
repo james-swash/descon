@@ -15,7 +15,6 @@
         <div id="acdc">DC</div>
         <div id="autorange">Auto</div>
     </div>
-    <div class="toggleMenu"></div>
     <ul class="menu">
          <li id="mode"><a href="#">Mode</a></li>
             <ul class="modemenu">
@@ -33,7 +32,8 @@
             </ul>
          <li id="hold">Hold</li>
          <li id="screenshot">Screenshot</li>
-         <li id="settings">Audio: On</li>
+		 <li id="settings">Audio: On</li>
+		 <li id="continuity">Continuity: Off</li>
     </ul>
 <div id="chartContainer"></div>
 
@@ -44,7 +44,8 @@ $(function(){
 	const {remote} = require('electron')
 	const Websocket = require('./websocket')
 	var win = remote.getCurrentWindow()
-	const ws = new Websocket(false);
+	const ws = new Websocket(true);
+	const parseEng = require('parse-eng')
 
 	myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
 	unit = 'V'
@@ -73,7 +74,8 @@ $(function(){
 
     $(".modemenu").hide()
     $(".rangemenu").hide()
-    $(".acdcmenu").hide()
+	$(".acdcmenu").hide()
+	$("#continuity").hide();
 
 	$("#mode").on('click', function() {
 		$('.modemenu').toggle()
@@ -103,9 +105,9 @@ $(function(){
 
 				console.log(i);
 
-				console.log("regex",value[0])
+				console.log("regex",value[1])
 				// console.log("Message received", i)
-				callback(Number.parseFloat(value[0]))
+				callback(Number.parseFloat(parseEng(value[1])))
 
 			}
 		})
@@ -121,21 +123,18 @@ $(function(){
 			$(".rangemenu #zero").text('-10 to 10 V')
 			$(".rangemenu #one").text('-1 to 1 V')
 			$(".rangemenu #two").text('-100 to 100 mV')
+			$("#continuity").hide();
 			switch(rangeVal) {
 				case 0:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Voltage | -10 to 10 V')
 					break
 				case 1:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -1 to 1 V')
 					break
 				case 2:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -100 to 100 mV')
 					break       
 				case 3:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Voltage | Auto')
 					break       
 			}
@@ -149,21 +148,18 @@ $(function(){
 			$(".rangemenu #zero").text('-10 to 10 V')
 			$(".rangemenu #one").text('-1 to 1 V')
 			$(".rangemenu #two").text('-100 to 100 mV')
+			$("#continuity").hide();
 			switch(rangeVal) {
 				case 0:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Voltage | -10 to 10 V')
 					break
 				case 1:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -1 to 1 V')
 					break
 				case 2:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -100 to 100 mV')
 					break       
 				case 3:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Voltage | Auto')
 					break       
 			}
@@ -177,21 +173,18 @@ $(function(){
 			$(".rangemenu #zero").text('-1 to 1 A')
 			$(".rangemenu #one").text('-100 to 100 mA')
 			$(".rangemenu #two").text('-10 to 10 mA')
+			$("#continuity").hide()
 			switch(rangeVal) {
 				case 0:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -1 to 1 A')
 					break
 				case 1:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -100 to 100 mA')
 					break
 				case 2:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -10 to 10 mA')
 					break       
 				case 3:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Current | Auto')
 					break       
 			}
@@ -205,21 +198,18 @@ $(function(){
 			$(".rangemenu #zero").text('10 to 10k Ohm')
 			$(".rangemenu #one").text('100 to 100k Ohm')
 			$(".rangemenu #two").text('1k to 1M Ohm')
+			$("#continuity").show();
 			switch(rangeVal) {
 				case 0:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
 					break
 				case 1:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
 					break
 				case 2:
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
 					break       
 				case 3:
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Resistance | Auto')
 					break       
 			}
@@ -249,15 +239,12 @@ $(function(){
 			rangeVal = 0
 			switch(unit) {
 				case 'V':
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Voltage | -10 to 10 V')
 					break
 				case 'A':
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -1 to 1 A')
 					break
 				case 'R':
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Resistance | 10 to 10k Ohm')
 					break       
 			}
@@ -269,15 +256,12 @@ $(function(){
 			rangeVal = 1
 			switch(unit) {
 				case 'V':
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -1 to 1 V')
 					break
 				case 'A':
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -100 to 100 mA')
 					break
 				case 'R':
-					$("h1 #rangevalue").text('')
 					$(".attributes #autorange").text('Resistance | 100 to 100k Ohm')
 					break       
 			}
@@ -289,22 +273,18 @@ $(function(){
 			rangeVal = 2
 			switch(unit) {
 				case 'V':
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Voltage | -100 to 100 mV')
 					break
 				case 'A':
-					$("h1 #rangevalue").text('m')
 					$(".attributes #autorange").text('Current | -10 to 10 mA')
 					break
 				case 'R':
-					$("h1 #rangevalue").text('k')
 					$(".attributes #autorange").text('Resistance | 1k to 1M Ohm')
 					break       
 			}
 		})
 		$('#auto').on('click', function(e) {
 			$('.rangemenu').toggle()
-			$("h1 #rangevalue").text('')
 			rangeVal = 3
 			switch(unit) {
 				case 'V':
@@ -333,6 +313,27 @@ $(function(){
 				$('#settings').text('Audio: On')
 			}
 		})
+	}
+
+	function addContinuityHandler() {
+
+		let cont = false;
+
+		$('#continuity').on('click', function (e) {
+			if (unit === 'R') {
+				if (cont) {
+					commandMsg = 'CONTinuity Off;'
+					$("#continuity").text("Continuity: Off")
+					cont = false;
+				}
+				else {
+					commandMsg = 'CONTinuity On;'
+					$("#continuity").text("Continuity: On")
+					cont = true;
+				}
+			}
+		})
+
 	}
 
 	function screenShot() {
@@ -370,12 +371,23 @@ $(function(){
 
 	}
 
+	$('#hold').on('click', function(e) {
+        if (hold) {
+            hold = false
+            runInt = setInterval(function(){updateChart()}, updateInterval)
+        }
+        else {
+            hold = true
+            clearInterval(runInt)
+        }
+    })
+
 	updateChart(dataLength);
-	setInterval(function(){updateChart()}, updateInterval);
+	runInt = setInterval(function(){updateChart()}, updateInterval);
 	getRange()
 	getMode()
 	getAudio()
-
+	addContinuityHandler()
 });
 </script>
 

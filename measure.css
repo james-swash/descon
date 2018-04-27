@@ -51,50 +51,49 @@ ul {
     padding: 5px 10px;
 }
 
-.toggleMenu {
+/* .toggleMenu {
     float: left;
     width: 40px;
     height: 40px;
     background: url(./images/More_64px.png);
     background-size: cover;
-}
+} */
 
 .menu {
     font-family: Helvetica, sans-serif;
     font-size: 18px;
     position: relative;
     color: black;
-    margin-left: 10px;
+    left: 5px;
     float: left;
     width: 100px;
     height: 325px;
     text-align: left;
     border-right: solid gray 2px;
     z-index: 10;
+    padding: 10px;
 }
 
 .modemenu {
     margin-top: -70px;
-    margin-left: 100px;
+    margin-left: 115px;
     position: absolute;
     width: 100px;
-    height: 150px;
+    height: 160px;
     border-right: solid gray 2px;
     border-bottom: solid gray 2px;
     text-align: left;
-    padding: -40px;
 }
 
 .rangemenu {
     margin-top: -125px;
-    margin-left: 100px;
+    margin-left: 115px;
     position: absolute;
     width: 100px;
-    height: 180px;
+    height: 220px;
     border-right: solid gray 2px;
     border-bottom: solid gray 2px;
     text-align: left;
-    padding: -40px;
 }
 
 /* #AC {
@@ -186,14 +185,14 @@ ul {
 
 #clearlog {
     float: right;
-    top: 380px;
-    right: 50px;
+    bottom: 100px;
+    right: 100px;
     padding: 5px 5px;
     background: url(./images/Trash_64px.png);
     background-size: cover;
     width: 20px;
     height: 20px;
-    margin: 50px 20px;
+    margin: 10px;
 }
 
 #imgHolder {
@@ -205,20 +204,21 @@ ul {
     background-size: cover;
     width: 20px;
     height: 20px;
-    margin: 50px 20px;
+    margin: 10px;
 
     animation: blink 1s ease-in infinite;
 }
 
 #record {
     float: right;
-    bottom: 0px;
+    bottom: 100px;
+    right: 50px;
     padding: 5px 5px;
     background: url(./images/record_50px.png);
     background-size: cover;
     width: 20px;
     height: 20px;
-    margin: 50px 20px;
+    margin: 10px;
 }
 
 #record:hover {
@@ -277,13 +277,13 @@ ul {
     height: 30px;
 }
 
-.toggleMenu:hover {
+/* .toggleMenu:hover {
     float: left;
     width: 40px;
     height: 40px;
     background: url(./images/Menuhov_64px.png);
     background-size: cover;
-}
+} */
 
 @keyframes blink {
     from, to { opacity: 1 }
@@ -294,4 +294,53 @@ ul {
     width: 65%;
     height: 70%;
     margin-left: 280px;
+}
+
+.grid {
+    display: grid;
+    height: 70px;
+    width: 590px;
+    grid-template: 1fr / 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px 5px;
+    position: relative;
+    bottom: 5px;
+    left: 1%;
+    justify-content: center;
+    border-top: solid gray 2px;
+}
+
+.box {
+    
+    color: black;
+    text-align: center;
+    text-justify: center;
+    border-radius: 3px;
+    justify-content: center;
+    padding: 2px 2px;
+}
+
+.measure {
+    color: rgb(0, 0, 0);
+}
+
+.measure:hover {
+    border-radius: 3px;
+    color: black;
+    background: rgb(175, 175, 175);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(7, 0, 102);
+}
+
+li:hover {
+    border-radius: 3px;
+    color: black;
+    background: rgb(175, 175, 175);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(143, 0, 0);
+}
+
+ul {
+    padding: 0;
 }
