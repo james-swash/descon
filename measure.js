@@ -287,11 +287,11 @@ function tempReading() {
         console.log(i)
         var temp_info = JSON.parse(i)
         console.log(temp_info)      
-        $("#temp").text(temp_info[0])
-        $("#pressure").text(temp_info[1])
-        $("#alt").text(temp_info[2])
-        $("#sealvl").text(temp_info[3])
-        $("#humid").text(temp_info[4])
+        $("#temp").text(temp_info[0]+'*C')
+        $("#pressure").text(temp_info[1]+'Pa')
+        $("#alt").text(temp_info[2]+'m')
+        $("#sealvl").text(temp_info[3]+'Pa')
+        $("#humid").text(temp_info[4]+'%')
     })
 }
 
