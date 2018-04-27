@@ -264,14 +264,16 @@ function addContinuityHandler() {
     $('#continuity').on('click', function (e) {
         if (unit === 'R') {
             if (cont) {
-                commandMsg = 'CONTinuity Off;'
-                $("#continuity").text("Continuity: Off")
-                cont = false;
+                ws.send('CONTinuity Off;', function(){
+                    $("#continuity").text("Continuity: Off")
+                    cont = false;
+                })
             }
             else {
-                commandMsg = 'CONTiuity On;'
-                $("#continuity").text("Continuity: On")
-                cont = true;
+                ws.send('CONTinuity On;', function(){
+                    $("#continuity").text("Continuity: On")
+                    cont = true;
+                })                
             }
         }
     })
