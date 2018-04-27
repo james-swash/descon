@@ -60,7 +60,7 @@ Websocket.prototype.send = function (comm, clb) {
                     }
                 }                
                 catch(err){
-                    console.error(evt.data)              
+                    clb(evt.data)            
                 }
             }
         };
