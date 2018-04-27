@@ -48,10 +48,15 @@ Websocket.prototype.send = function (comm, clb) {
     } else if(connected) {
         this.ws.send(comm);
         this.ws.onmessage = function (evt) {
-            reader.readAsText(evt.data);
-            reader.onload = function () {
-                clb(reader.result);
+            if (evt.data instanceof String) {
                 console.log(comm);
+                clb(evt.data);
+            } else {
+                reader.readAsText(evt.data);
+                reader.onload = function () {
+                    clb(reader.result);
+                    console.log(comm);
+                }
             }
         };
     } else {
