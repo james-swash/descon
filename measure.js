@@ -5,7 +5,7 @@ var win = remote.getCurrentWindow()
 const html2canvas = require('html2canvas')
 const parseEng = require('parse-eng')
 
-const ws = new Websocket(true);
+const ws = new Websocket(false);
 
 myRe = new RegExp(/^.*\s(.*)\n$/, 'i')
 unit = 'V'
@@ -394,7 +394,7 @@ $(function() {
     $('#hold').on('click', function(e) {
         if (hold) {
             hold = false
-            runInt = setInterval(function() {display(logDataFlag)}, 1000)
+            runInt = setInterval(function() {display(logDataFlag)}, 500)
         }
         else {
             hold = true
@@ -424,7 +424,7 @@ $(function() {
         }
     })
         
-    runInt = setInterval(display, 1000)
+    runInt = setInterval(display, 500)
 
     turnOff()
     menu()
