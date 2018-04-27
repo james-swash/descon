@@ -269,7 +269,7 @@ function addContinuityHandler() {
                 cont = false;
             }
             else {
-                commandMsg = 'CONTinuity On;'
+                commandMsg = 'CONTiuity On;'
                 $("#continuity").text("Continuity: On")
                 cont = true;
             }
@@ -283,7 +283,7 @@ function tempReading() {
     command = "MEASure:ENV?;"
     ws.send(command, function (i) {
         console.log(i)
-        var temp_info = JSON.parse(exec(i))
+        var temp_info = JSON.parse(i)
         console.log(temp_info)      
         $("#temp").text(temp_info[0])
         $("#pressure").text(temp_info[1])
