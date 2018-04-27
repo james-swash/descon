@@ -280,16 +280,16 @@ function addContinuityHandler() {
 
 function tempReading() {
     let temp = false;
-    command = "MEASure: TEMP?;"
+    command = "MEASure:ENV?;"
     ws.send(command, function (i) {
         console.log(i)
-        var temp_info = exec(i)
+        var temp_info = JSON.parse(exec(i))
         console.log(temp_info)      
-        // $("#temp").text(temp_info[0])
-        // $("#pressure").text(temp_info[1])
-        // $("#alt").text(temp_info[2])
-        // $("#sealvl").text(temp_info[3])
-        // $("#humid").text(temp_info[4])
+        $("#temp").text(temp_info[0])
+        $("#pressure").text(temp_info[1])
+        $("#alt").text(temp_info[2])
+        $("#sealvl").text(temp_info[3])
+        $("#humid").text(temp_info[4])
     })
 }
 
@@ -449,6 +449,7 @@ $(function() {
     // getUnitType()
     getRange()
     screenShot()
+    setInterval(tempReading, 5000)
     // setInterval(msg2Board, 1000)
     
 })
