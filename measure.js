@@ -449,7 +449,9 @@ $(function() {
     // getUnitType()
     getRange()
     screenShot()
-    setInterval(tempReading, 5000)
+    setTimeout(function(){
+        setInterval(tempReading, 5000)
+    },250)
     // setInterval(msg2Board, 1000)
     
 })
