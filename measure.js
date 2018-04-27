@@ -176,7 +176,8 @@ function getRange() {
     $('#zero').on('click', function(e) {
         $('.rangemenu').toggle()
         $(".attributes #autorange").text('')
-        commandMsg = 'RANGE 0;'
+        ws.send('RANGE 0;', function(){
+        })
         rangeVal = 0
         switch(unit) {
             case 'V':
@@ -193,7 +194,8 @@ function getRange() {
     $('#one').on('click', function(e) {
         $('.rangemenu').toggle()
         $(".attributes #autorange").text('')
-        commandMsg = 'RANGE 1;'
+        ws.send('RANGE 1;', function(){
+        })
         rangeVal = 1
         switch(unit) {
             case 'V':
@@ -210,7 +212,8 @@ function getRange() {
     $('#two').on('click', function(e) {
         $('.rangemenu').toggle()
         $(".attributes #autorange").text('')
-        commandMsg = 'RANGE 2;'
+        ws.send('RANGE 2;', function(){
+        })
         rangeVal = 2
         switch(unit) {
             case 'V':
@@ -239,7 +242,8 @@ function getRange() {
                 $(".attributes #autorange").text('Resistance | Auto')
                 break       
         }
-        commandMsg = 'RANGE AUTO;'
+        ws.send('RANGE AUTO;', function(){
+        })
     })
 
 }
@@ -247,12 +251,14 @@ function getRange() {
 function getAudio() {
     $('#settings').on('click', function(e){
         if($('#settings').text() === 'Audio: On'){
-            commandMsg = 'Audio: Off;'
-            $('#settings').text('Audio: Off')
+            ws.send('Audio: Off;', function(){
+                $('#settings').text('Audio: Off')
+            })
         }
         else {
-            commandMsg = 'Audio: On;'
-            $('#settings').text('Audio: On')
+            ws.send('Audio: On;', function(){
+                $('#settings').text('Audio: On')
+            })
         }
     })
 }
