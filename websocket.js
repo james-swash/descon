@@ -52,10 +52,15 @@ Websocket.prototype.send = function (comm, clb) {
                 console.log(comm);
                 clb(evt.data);
             } else {
-                reader.readAsText(evt.data);
-                reader.onload = function () {
-                    clb(reader.result);
-                    console.log(comm);
+                try{
+                    reader.readAsText(evt.data);
+                    reader.onload = function () {
+                        clb(reader.result);
+                        console.log(comm);
+                    }
+                }                
+                catch(err){
+                    console.error(evt.data)              
                 }
             }
         };
