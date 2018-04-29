@@ -49,15 +49,15 @@ function getMode() {
         switch(rangeVal) {
             case 0:
                 $("h1 #rangevalue").text('')
-                $(".attributes #autorange").text('Voltage | -10 to 10 V')
+                $(".attributes #autorange").text('Voltage | 0 to 10 V')
                 break
             case 1:
                 $("h1 #rangevalue").text('m')
-                $(".attributes #autorange").text('Voltage | -1 to 1 V')
+                $(".attributes #autorange").text('Voltage | 0 to 1 V')
                 break
             case 2:
                 $("h1 #rangevalue").text('m')
-                $(".attributes #autorange").text('Voltage | -100 to 100 mV')
+                $(".attributes #autorange").text('Voltage | 0 to 100 mV')
                 break       
             case 3:
                 $("h1 #rangevalue").text('')
