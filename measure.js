@@ -207,7 +207,7 @@ function getRange() {
                 $(".attributes #autorange").text('Current | -10 to 10 mA')
                 break
             case 'R':
-                $(".attributes #autorange").text('Resistance | 0 to 10k Ohm')
+                $(".attributes #autorange").text('Resistance | 100k to 1M Ohm')
                 break       
         }
     })
