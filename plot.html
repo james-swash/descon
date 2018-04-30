@@ -359,11 +359,11 @@ $(function(){
 		display(function(value){
 
 			if(value !== null) {
-				console.log(value)
+				console.log("stuff", parseEng(value))
 
 				dps.push({
 					x: new Date(),
-					y: value
+					y: parseEng(value)
 					
 				})
 
