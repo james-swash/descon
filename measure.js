@@ -48,19 +48,15 @@ function getMode() {
         $("#continuity").hide();
         switch(rangeVal) {
             case 0:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Voltage | 0 to 10 V')
                 break
             case 1:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | 0 to 1 V')
                 break
             case 2:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | 0 to 100 mV')
                 break       
             case 3:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Voltage | Auto')
                 break       
         }
@@ -78,19 +74,15 @@ function getMode() {
         $("#continuity").hide();
         switch(rangeVal) {
             case 0:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Voltage | -10 to 10 V')
                 break
             case 1:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | -1 to 1 V')
                 break
             case 2:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Voltage | -100 to 100 mV')
                 break       
             case 3:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Voltage | Auto')
                 break       
         }
@@ -108,19 +100,15 @@ function getMode() {
         $("#continuity").hide();
         switch(rangeVal) {
             case 0:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -1 to 1 A')
                 break
             case 1:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -100 to 100 mA')
                 break
             case 2:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Current | -10 to 10 mA')
                 break       
             case 3:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Current | Auto')
                 break       
         }
@@ -138,19 +126,15 @@ function getMode() {
         $("#continuity").show();
         switch(rangeVal) {
             case 0:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Resistance | 100k to 1M Ohm')
                 break
             case 1:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Resistance | 10k to 100k Ohm')
                 break
             case 2:
-                $("h1 #rangevalue").text('m')
                 $(".attributes #autorange").text('Resistance | 0 to 10k Ohm')
                 break       
             case 3:
-                $("h1 #rangevalue").text('')
                 $(".attributes #autorange").text('Resistance | Auto')
                 break       
         }
@@ -229,7 +213,6 @@ function getRange() {
     })
     $('#auto').on('click', function(e) {
         $('.rangemenu').toggle()
-        $("h1 #rangevalue").text('')
         rangeVal = 3
         switch(unit) {
             case 'V':
