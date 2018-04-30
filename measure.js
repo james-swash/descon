@@ -120,9 +120,9 @@ function getMode() {
         $('.modemenu').toggle()
         $("h1 #unitvalue").text(unit)
         $(".attributes #acdc").text('')
-        $(".rangemenu #zero").text('10 to 10k Ohm')
-        $(".rangemenu #one").text('100 to 100k Ohm')
-        $(".rangemenu #two").text('1k to 1M Ohm')
+        $(".rangemenu #zero").text('100K to 1M Ohm')
+        $(".rangemenu #one").text('10k to 100k Ohm')
+        $(".rangemenu #two").text('0 to 10k Ohm')
         $("#continuity").show();
         switch(rangeVal) {
             case 0:
@@ -207,7 +207,7 @@ function getRange() {
                 $(".attributes #autorange").text('Current | -10 to 10 mA')
                 break
             case 'R':
-                $(".attributes #autorange").text('Resistance | 100k to 1M Ohm')
+                $(".attributes #autorange").text('Resistance | 0 to 10k Ohm')
                 break       
         }
     })
