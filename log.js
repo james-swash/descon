@@ -35,12 +35,7 @@ $(document).ready(function() {
                 }
             }
             else if (unitData[i].charAt(0) === 'A'){
-                if (unitData[i].charAt(2) === 'A') {
-                    unitInstance = "Current - AC"
-                }
-                else if (unitData[i].charAt(2) === 'D') {
-                    unitInstance = "Current - DC"
-                }
+                unitInstance = "Current"
             }
             else if (unitData[i].charAt(0) === 'R'){
                 unitInstance = "Resistance"
