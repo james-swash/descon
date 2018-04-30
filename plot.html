@@ -47,7 +47,7 @@ $(function(){
 	const ws = new Websocket(true);
 	const parseEng = require('parse-eng')
 
-	myRe = new RegExp(/(\-?\d+(\.\d+)?(E\d+)?)/, 'i')
+	myRe = new RegExp(/^.*\s(.*)\n$/, 'i')
 	unit = 'V'
 	// unitType = 'DC'
 	// range = ''
@@ -359,10 +359,12 @@ $(function(){
 		display(function(value){
 
 			if(value !== null) {
+				console.log(value)
 
 				dps.push({
 					x: new Date(),
 					y: value
+					
 				})
 
 				//console.log(dps)
