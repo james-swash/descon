@@ -1,2 +1,2 @@
 # descon
-DesCon UI module
+UI code for Electron application that runs on raspberry pi model 3
